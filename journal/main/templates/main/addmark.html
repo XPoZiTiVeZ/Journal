@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Добавить оценку
+{% endblock %}
+
+{% block content %}
+    <h1>Страница добавления оценок</h1>
+    <form method='POST'>
+        {% csrf_token %}
+        {{ form.title }}<br>
+        {{ form.mark }}<br>
+        {{ form.marktype }}<br>
+        {{ form.date }}<br>
+        <button type="submit" class="btn btn-success">Добавить</button>
+        <span>{{ error }}</span>
+    </form>
+{% endblock %}
