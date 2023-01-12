@@ -1,13 +1,72 @@
 {% extends "main/base.html" %}
-{% load crispy_forms_tags %}
-{% block content %}
+
+{% block styles %}
+<style>
+    input:valid {
+        outline: 1px solid lightgreen;
+    }
+    input:invalid {
+        outline: 1px solid lightcoral;
+    }
+</style>
+{% endblock styles %}
+
+{% block login %}
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Добро пожаловать в клуб Python Bytes</legend>
-                {{ form|crispy }}
-            </fieldset>
+                <div id="div_id_username" class="form-group">
+                    <label for="id_username" class=" requiredField">Имя пользователя<span class="asteriskField">*</span></label>
+                    <div>
+                        <input type="text" name="username" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_username" pattern="[A-Za-zА-Яа-яЁё0-9@.+-_]{1,20}">
+                        <small id="hint_id_username" class="form-text text-muted">Обязательное поле. Не более 20 символов. Только буквы, цифры и символы @/./+/-/_.</small>
+                    </div>
+                </div>
+                <div id="div_id_names" class="form-group mb-2">
+                    <label for="id_names" class=" requiredField">ФИО<span class="asteriskField">*</span></label>
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <input type="text" name="last_name" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_last_name" placeholder="Фамилия" pattern="[а-яА-ЯёЁ]{20}">
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <input type="text" name="first_name" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_first_name" placeholder="Имя">
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <input type="text" name="father_name" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_father_name" placeholder="Отчество">
+                        </div>
+                    </div>
+                    <small id="hint_id_names" class="form-text text-muted">Обязательное поле. Не более 150 символов. Только буквы</small>
+                </div>
+                <div id="div_id_emai" class="form-group mb-2">
+                    <label for="id_email" class=" requiredField">Email<span class="asteriskField">*</span></label>
+                    <div>
+                        <input type="email" name="email" class="emailinput form-control" required="" id="id_email">
+                    </div>
+                    <small id="hint_id_names" class="form-text text-muted">Обязательное поле. Ваша школьная почта. Заканчивается на @1543.msk.ru</small>
+                </div>
+                <div id="div_id_password" class="form-group mb-2">
+                    <label for="id_password" class=" requiredField">Пароль<span class="asteriskField">*</span></label>
+                    <div>
+                        <input type="password" name="password" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password">
+                        <small id="hint_id_password" class="form-text text-muted">
+                            <ul>
+                                <li>Ваш пароль должен содержать как минимум 8 символов.</li>
+                                <li>Пароль не должен быть слишком простым и распространенным.</li>
+                                <li>Пароль не может состоять только из цифр.</li>
+                            </ul>
+                        </small>
+                    </div>
+                </div>
+                <div id="div_id_password_repeat" class="form-group mb-2">
+                    <label for="id_password_repeat" class=" requiredField">Подтверждение пароля<span class="asteriskField">*</span></label>
+                    <div>
+                        <input type="password" name="password_repeat" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password_repeat">
+                        <small id="hint_id_password_repeat" class="form-text text-muted">Для подтверждения введите, пожалуйста, пароль ещё раз.</small>
+                    </div>
+                </div>
+
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Регистрация</button>
             </div>
@@ -18,4 +77,4 @@
             </small>
         </div>
     </div>
-{% endblock content %}
+{% endblock login %}

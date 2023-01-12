@@ -1,6 +1,6 @@
 from .models import Mark
 from django.forms import ModelForm, TextInput, Select
-from datetime import date
+from datetime import datetime, date
 
 class MarkForm(ModelForm):  
     class Meta:
@@ -26,6 +26,7 @@ class MarkForm(ModelForm):
                 'class' : 'form-control',
                 'placeholder' : 'Введите дату',
                 'type' : 'date',
-                'value' : date.today()
+                'value' : datetime.now().strftime('%Y-%m-%d')
             })
         }
+        print(datetime.now().strftime('%Y-%m-%d'), 123)

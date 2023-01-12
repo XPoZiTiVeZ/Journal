@@ -8,30 +8,36 @@
     {% block links %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
-<body>
-    <div class="container py-3">
-      <header>
-        <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-          <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-            <span class="fs-4">Журнал нового поколения</span>
-          </a>
-    
-          <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'home' %}">Журнал</a>
-            {% if user.is_authenticated %}
-              <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'profile' %}">Профиль</a>
-              <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'logout' %}">Выход</a>
-            {% else %}
-              <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'login' %}">Вход</a>
-              <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'register' %}">Регистрация</a>
-            {% endif %}
-          </nav>
-        </div>
-      </header>
-      <main>
-        {% block content %}{% endblock %}
-      </main>
-      {% block scripts %}{% endblock %}
-    </div>
+<body onload="loading()">
+  {% block styles %}{% endblock %}
+  <div class="container py-3">
+    <header>
+      <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+          <span class="fs-4">Журнал нового поколения</span>
+        </a>
+  
+        <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+          <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'home' %}">Журнал</a>
+          {% if user.is_authenticated %}
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'profile' %}">Профиль</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'logout' %}">Выход</a>
+          {% else %}
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'login' %}">Вход</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'register' %}">Регистрация</a>
+          {% endif %}
+        </nav>
+      </div>
+    </header>
+    <main>
+      {% if user.is_authenticated %}
+      {% block content %}{% endblock %}
+      {% else %}
+      {% block login %}{% endblock %}
+      {% endif %}
+    </main>
+    <p>{{ user.firstname }}</p>
+    {% block scripts %}{% endblock %}
+  </div>
 </body>
 </html>

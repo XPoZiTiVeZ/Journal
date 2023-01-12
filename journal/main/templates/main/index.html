@@ -1,40 +1,10 @@
 {% extends 'main/base.html' %}
-{% load static %}
+
 {% block title %}
-{{ title }}
+Страница про нас
 {% endblock %}
 
 {% block content %}
-  <H2 class="text-center">Журнал</H2>
-  <div class="slider">
-    {% for i in range %}
-      <div><span class="text-center" style="display:block;background-color:#e6e6e6;border-radius:50%;width:50px;height:50px;">{{ i }}</span></div>
-    {% endfor %}
-  </div>
-  <div class="lessons" style="background-color:#e6e6e6;border-radius:5px;">
-    <H4></H4>
-  </div>
-{% endblock %}
-
-{% block links%}
-  <link rel="stylesheet" type="text/css" href="{% static "slick/slick.css" %}"/>
-  <link rel="stylesheet" type="text/css" href="{% static "slick/slick-theme.css" %}"/>
-{% endblock %}
-
-{% block scripts %}
-  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script type="text/javascript" src="{% static "slick/slick.min.js" %}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  <script>
-    var width = window.innerWidth;
-    $('.slider').slick({
-      prevArrow: '<button class="slider-prev" aria-label="Previous" type="button">&lt;</button>',
-              nextArrow: '<button class="slider-next" aria-label="Next" type="button">&gt;</button>',
-      infinite: false,
-      mobileFirst: true,
-      slidesToShow: 7,
-      slidesToScroll: 7
-    });
-  </script>
+  <p>Страница о нас</p>
+  <p>Информация о нас</p>
 {% endblock %}

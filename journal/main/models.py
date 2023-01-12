@@ -20,3 +20,15 @@ class Mark(models.Model):
     class Meta:
         verbose_name = 'Оценка'
         verbose_name_plural = 'Оценки'
+
+class Work(models.Model):
+    title = models.CharField('Предмет', max_length=50)
+    work = models.IntegerField('Оценка')
+    date = models.DateField('Дата')
+
+    def __str__(self):
+        return str(self.title) + ' ' + str(self.mark) + ' ' + str(self.date)
+    
+    class Meta:
+        verbose_name = 'Задание'
+        verbose_name_plural = 'Задания'
