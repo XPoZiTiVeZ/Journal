@@ -9,16 +9,160 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body onload="loading()">
-  {% block styles %}{% endblock %}
-  <div class="container py-3">
+  {% block styles %}{% endblock styles %}
+  <style>
+    body {
+      background-color: #e6e6e6;
+    }
+
+    header {
+      background-color: #fff;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+
+    li {
+      list-style-type: none;
+      line-height: 2.5rem;
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    tr:not(:last-child) {
+      border-bottom: 1px solid #fff;
+    }
+
+    .no-p {
+      padding: 0 5px;
+    }
+
+    .nado {
+      padding: 0.5rem;
+      border-radius: 9px;
+    }
+
+    .ml-2 {
+      margin-left: 0.5rem;
+    }
+
+    .nado:hover {
+      background: #d6d6d6;
+    }
+    
+    .menu {
+      padding: 0;
+    }
+
+    .name {
+      margin-left: 1rem;
+    }
+
+    .loader {
+      animation: spin 1s infinite linear;
+      border: solid 2vmin transparent;
+      border-radius: 50%;
+      border-right-color: #09f;
+      border-top-color: #09f;
+      box-sizing: border-box;
+      height: 20vmin;
+      left: calc(50% - 10vmin);
+      position: fixed;
+      top: calc(50% - 10vmin);
+      width: 20vmin;
+      z-index: 1;
+    }
+    .loader:before {
+      animation: spin 2s infinite linear;
+      border: solid 2vmin transparent;
+      border-radius: 50%;
+      border-right-color: #3cf;
+      border-top-color: #3cf;
+      box-sizing: border-box;
+      content: "";
+      height: 16vmin;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 16vmin;
+    }
+    .loader:after {
+      animation: spin 3s infinite linear;
+      border: solid 2vmin transparent;
+      border-radius: 50%;
+      border-right-color: #6ff;
+      border-top-color: #6ff;
+      box-sizing: border-box;
+      content: "";
+      height: 12vmin;
+      left: 2vmin;
+      position: absolute;
+      top: 2vmin;
+      width: 12vmin;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    /* .menu {
+      border-radius: 9px;
+      border: 5px solid #a0a0a0;
+    } */
+    .slider {
+      margin: 0 50px;
+    }
+    .slider-prev {
+      position: absolute;
+      top: 5px;
+      left: -30px;
+    }
+    .slider-next {
+      position: absolute;
+      top: 5px;
+      right: -30px;
+    }
+    @media (max-width: 768px) {
+      .slider {
+        margin: 0 0 50px;
+      }
+      .slider-prev {
+        position: absolute;
+        top: 50px;
+        left: 0;
+      }
+      .slider-next {
+        position: absolute;
+        top: 50px;
+        right: 0;
+      }
+    }
+    .lessons {
+      border-radius: 15px;
+      background-color: #fff;
+    }
+  </style>
+  <div class="container pe-3">
     <header>
-      <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <div class="d-flex flex-column flex-md-row align-items-center py-2 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-          <span class="fs-4">Журнал нового поколения</span>
+          <span class="fs-4 name">Журнал нового поколения</span>
         </a>
   
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-          <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'home' %}">Журнал</a>
+          <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'diary' %}">Журнал</a>
           {% if user.is_authenticated %}
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'profile' %}">Профиль</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'logout' %}">Выход</a>
@@ -31,13 +175,24 @@
     </header>
     <main>
       {% if user.is_authenticated %}
-      {% block content %}{% endblock %}
+        {% block content %}{% endblock content %}
       {% else %}
-      {% block login %}{% endblock %}
+        {% block login %}{% endblock login %}
       {% endif %}
     </main>
-    <p>{{ user.firstname }}</p>
     {% block scripts %}{% endblock %}
+    <script type="text/javascript">
+      var timeout
+      function loading() {
+        console.log('loading')
+        timeout = setTimeout(showPage, 300)
+      }
+      function showPage() {
+        console.log('showing page')
+        document.getElementById("spinner").style.display = "none";
+        document.getElementById("page").style.display = "flex";
+      }
+    </script>
   </div>
 </body>
 </html>

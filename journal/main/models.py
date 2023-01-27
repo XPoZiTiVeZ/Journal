@@ -21,13 +21,14 @@ class Mark(models.Model):
         verbose_name = 'Оценка'
         verbose_name_plural = 'Оценки'
 
-class Work(models.Model):
+class Task(models.Model):
     title = models.CharField('Предмет', max_length=50)
-    work = models.IntegerField('Оценка')
+    shortdesk = models.TextField('Краткое описание', max_length=100)
+    fulldesk = models.TextField('Полное описание', max_length=500)
     date = models.DateField('Дата')
 
     def __str__(self):
-        return str(self.title) + ' ' + str(self.mark) + ' ' + str(self.date)
+        return str(self.title) + ' ' + str(self.shortdesk) + ' ' + str(self.date)
     
     class Meta:
         verbose_name = 'Задание'

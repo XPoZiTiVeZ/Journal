@@ -1,4 +1,4 @@
-from .models import Mark
+from .models import Mark, Task
 from django.forms import ModelForm, TextInput, Select
 from datetime import datetime, date
 
@@ -29,4 +29,29 @@ class MarkForm(ModelForm):
                 'value' : datetime.now().strftime('%Y-%m-%d')
             })
         }
-        print(datetime.now().strftime('%Y-%m-%d'), 123)
+
+class TaskForm(ModelForm):  
+    class Meta:
+        model = Task
+        fields = ['title', 'shortdesk', 'fulldesk', 'date']
+        choicestitle = (('Русский язык', 'Русский язык'),('Алгебра', 'Алгебра'),('Геометрия', 'Геометрия'))
+        widgets = {
+            'title' : Select(attrs={
+                'class' : 'form-control',
+                'placeholder' : 'Выберите предмет',
+            }, choices = choicestitle),
+            'shortdesk' : Select(attrs={
+                'class' : 'form-control',
+                'placeholder' : 'Введите краткое описание',
+            }),
+            'shortdesk' : Select(attrs={
+                'class' : 'form-control',
+                'placeholder' : 'Введите полное описание',
+            }),
+            'date' : TextInput(attrs={
+                'class' : 'form-control',
+                'placeholder' : 'Выберите дату',
+                'type' : 'date',
+                'value' : datetime.now().strftime('%Y-%m-%d')
+            })
+        }
