@@ -12,8 +12,8 @@ class CustomUserManager(BaseUserManager):
         """
         if not email:
             raise ValueError(_("The Email must be set"))
-        if email.split("@")[1] == "1543.msk.ru":
-            raise ValueError(_("Email domain must be 1543"))
+        if email.split("@")[1] != "1543.msk.ru":
+            raise ValueError(_("Почта должна иметь домен 1543.msk.ru"))
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)

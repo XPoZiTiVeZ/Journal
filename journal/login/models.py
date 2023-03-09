@@ -3,17 +3,14 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
 
-# class CustomUser(AbstractUser):
-#     email = models.CharField(_("email address"), max_length=254, unique=True)
-#     father_name = models.CharField(_("father name"), max_length=150, blank=True)
-#     is_teacher = models.BooleanField(default=False)
-
 class CustomUser(AbstractUser):
     username = None
-    email = models.EmailField(_('Почта'), unique=True)
-    father_name = models.CharField(_('Отчество'), max_length=254, blank=True, help_text='Если отчества нет, оставьте поле пустым')
-    is_confirmed = models.BooleanField(_('Подтверждённый'), default=False)
-    is_teacher = models.BooleanField(_('Учитель'), default=False, help_text='Отметье, если пользователь считается учителем')
+    email = models.EmailField(_('почта'), unique=True)
+    father_name = models.CharField(_('отчество'), max_length=254, blank=True, help_text='Если отчества нет, оставьте поле пустым', default="")
+    classes = models.CharField(_('классы'), max_length=254, blank=True, help_text="Класс для ученика или классы, которые обучает учитель, если много, пишется через пробел", default="")
+    subjects = models.CharField(_('предметы'), max_length=254, blank=True, help_text="Предметы, которые преподаёт учитель, если ученик - оставить пустым", default="")
+    is_email_verified = models.BooleanField(_('подтверждённый'), default=False)
+    is_teacher = models.BooleanField(_('учитель'), default=False, help_text='Отметье, если пользователь считается учителем')
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

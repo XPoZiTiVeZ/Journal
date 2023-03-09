@@ -8,7 +8,7 @@
     {% block links %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
-<body onload="loading()">
+<body>
   {% block styles %}{% endblock styles %}
   <style>
     body {
@@ -40,10 +40,12 @@
       width: 100%;
     }
 
-    tr:not(:last-child) {
-      border-bottom: 1px solid #fff;
+    tr {
+      border-top: 1px solid #fff;
     }
-
+    input {
+      text-align: center;
+    }
     .no-p {
       padding: 0 5px;
     }
@@ -117,10 +119,6 @@
         transform: rotate(360deg);
       }
     }
-    /* .menu {
-      border-radius: 9px;
-      border: 5px solid #a0a0a0;
-    } */
     .slider {
       margin: 0 50px;
     }
@@ -153,15 +151,41 @@
       border-radius: 15px;
       background-color: #fff;
     }
+    .success {
+      background-color: lightgreen;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 0.5rem;
+      border-radius: 9px;
+      max-width: 500px;
+    }
+    .error {
+      background-color: red;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 0.5rem;
+      border-radius: 9px;
+      max-width: 500px;
+    }
+    .info {
+      background-color: yellowgreen;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 0.5rem;
+      border-radius: 9px;
+      max-width: 500px;
+    }
   </style>
-  <div class="container pe-3">
+  <div class="container">
     <header>
       <div class="d-flex flex-column flex-md-row align-items-center py-2 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-          <span class="fs-4 name">Журнал нового поколения</span>
+          <span class="fs-4 name">Электронный дневник</span>
         </a>
-  
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+          {% if user.is_staff %}
+            <a class="me-3 py-2 text-dark text-decoration-none" href="admin/">Админпанель</a>
+          {% endif %}
           <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'diary' %}">Журнал</a>
           {% if user.is_authenticated %}
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'profile' %}">Профиль</a>
@@ -174,25 +198,23 @@
       </div>
     </header>
     <main>
+      {% if messages %}
+        <ul class="messages p-0">
+            {% for message in messages %}
+              <li class="{{ message.tags }} text-center">{{ message }}</li>
+            {% endfor %}
+        </ul>
+      {% endif %}
       {% if user.is_authenticated %}
-        {% block content %}{% endblock content %}
-      {% else %}
-        {% block login %}{% endblock login %}
+          {% block content %}{% endblock content %}
+        {% else %}
+          {% block login %}{% endblock login %}
       {% endif %}
     </main>
+    <footer>
+
+    </footer>
     {% block scripts %}{% endblock %}
-    <script type="text/javascript">
-      var timeout
-      function loading() {
-        console.log('loading')
-        timeout = setTimeout(showPage, 300)
-      }
-      function showPage() {
-        console.log('showing page')
-        document.getElementById("spinner").style.display = "none";
-        document.getElementById("page").style.display = "flex";
-      }
-    </script>
   </div>
 </body>
 </html>
