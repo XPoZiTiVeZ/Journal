@@ -1,5 +1,5 @@
 {% extends "main/base.html" %}
-
+{% load crispy_forms_tags %}
 {% block styles %}
 <style>
     input:valid {
@@ -10,71 +10,90 @@
     }
 </style>
 {% endblock styles %}
-
 {% block login %}
-    <div class="content-section">
-        <form method="POST">
+    <div class="content-section" style="max-width: 500px; margin: auto;">
+        <form method="POST" autocomplete="on" style="background-color: white;border-radius: 15px; padding: 5px 15px 0;">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Добро пожаловать в клуб Python Bytes</legend>
-                <div id="div_id_username" class="form-group">
-                    <label for="id_username" class=" requiredField">Имя пользователя<span class="asteriskField">*</span></label>
-                    <div>
-                        <input type="text" name="username" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_username" pattern="[A-Za-zА-Яа-яЁё0-9@.+-_]{1,20}">
-                        <small id="hint_id_username" class="form-text text-muted">Обязательное поле. Не более 20 символов. Только буквы, цифры и символы @/./+/-/_.</small>
-                    </div>
-                </div>
-                <div id="div_id_names" class="form-group mb-2">
-                    <label for="id_names" class=" requiredField">ФИО<span class="asteriskField">*</span></label>
-                    <div class="row">
-                        <div class="col-12 col-md-4 col-lg-3">
-                            <input type="text" name="last_name" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_last_name" placeholder="Фамилия" pattern="[а-яА-ЯёЁ]{20}">
+                <legend class="mb-4 text-center">Регистрация</legend>
+                <div>
+                    <div id="div_id_names" class="form-group mb-2">
+                        <h6 for="id_names" class=" requiredField text-center">ФИО</h6>
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <input type="text" name="last_name" maxlength="100" autofocus="" class="textinput textInput form-control" required id="id_last_name" placeholder="Фамилия" pattern="[а-яА-ЯёЁ]{1,100}">
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <input type="text" name="first_name" maxlength="100" autofocus="" class="textinput textInput form-control" required id="id_first_name" placeholder="Имя" pattern="[а-яА-ЯёЁ]{1,100}">
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <input type="text" name="father_name" maxlength="100" autofocus="" class="textinput textInput form-control" id="id_father_name" placeholder="Отчество" pattern="[а-яА-ЯёЁ]{1,100}">
+                            </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-3">
-                            <input type="text" name="first_name" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_first_name" placeholder="Имя">
-                        </div>
-                        <div class="col-12 col-md-4 col-lg-3">
-                            <input type="text" name="father_name" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_father_name" placeholder="Отчество">
-                        </div>
-                    </div>
-                    <small id="hint_id_names" class="form-text text-muted">Обязательное поле. Не более 150 символов. Только буквы</small>
-                </div>
-                <div id="div_id_emai" class="form-group mb-2">
-                    <label for="id_email" class=" requiredField">Email<span class="asteriskField">*</span></label>
-                    <div>
-                        <input type="email" name="email" class="emailinput form-control" required="" id="id_email">
-                    </div>
-                    <small id="hint_id_names" class="form-text text-muted">Обязательное поле. Ваша школьная почта. Заканчивается на @1543.msk.ru</small>
-                </div>
-                <div id="div_id_password" class="form-group mb-2">
-                    <label for="id_password" class=" requiredField">Пароль<span class="asteriskField">*</span></label>
-                    <div>
-                        <input type="password" name="password" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password">
-                        <small id="hint_id_password" class="form-text text-muted">
-                            <ul>
-                                <li>Ваш пароль должен содержать как минимум 8 символов.</li>
-                                <li>Пароль не должен быть слишком простым и распространенным.</li>
-                                <li>Пароль не может состоять только из цифр.</li>
+                        <small id="hint_id_names" class="form-text text-muted">
+                            <ul style="padding: 0;">
+                                <li style="line-height: 1.3rem;margin: 0.25rem 0 0 0.45rem;">Пожалуйста указывайте свои настоящие данные</li>
+                                <li style="line-height: 1.3rem;margin-left: 0.45rem;">Если у вас нет отчества, оставьте поле пустым</li>
                             </ul>
                         </small>
                     </div>
-                </div>
-                <div id="div_id_password_repeat" class="form-group mb-2">
-                    <label for="id_password_repeat" class=" requiredField">Подтверждение пароля<span class="asteriskField">*</span></label>
-                    <div>
-                        <input type="password" name="password_repeat" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password_repeat">
-                        <small id="hint_id_password_repeat" class="form-text text-muted">Для подтверждения введите, пожалуйста, пароль ещё раз.</small>
+                    <div id="div_id_email" class="form-group mb-2">
+                        <h6 for="id_email" class=" requiredField text-center">Адрес электронной почты</h6>
+                        <div>
+                            <input type="email" name="email" maxlength="100" autocomplete="username" class="emailinput form-control" required id="id_email" placeholder="*@1543.msk.ru" pattern="[0-9a-zA-Z]+@1543.msk.ru">
+                        </div>
+                        <small style="margin: 0.25rem 0 0 0.45rem;" id="hint_id_names" class="form-text text-muted">Адрес почты</small>
+                    </div>
+                    <div id="div_id_password" class="form-group mb-2">
+                        <h6 for="id_password" class=" requiredField text-center">Пароль</h6>
+                        <div>
+                            <input type="password" name="password1" maxlength="100" autocomplete="new-password" class="textinput textInput form-control" required id="id_password" placeholder="Xo0S&)3n" pattern="[a-zA-Z0-9!@#$%&*,.]{8,100}">
+                            <small id="hint_id_password" class="form-text text-muted">
+                                <ul style="padding: 0;">
+                                    <li style="line-height: 1.3rem;margin: 0.25rem 0 0 0.45rem;">Ваш пароль должен содержать от 8 до 100 символов.</li>
+                                    <li style="line-height: 1.3rem;margin-left: 0.45rem;">Пароль не должен быть слишком простым и распространенным.</li>
+                                    <li style="line-height: 1.3rem;margin-left: 0.45rem;">Пароль не может состоять только из цифр.</li>
+                                    <li style="line-height: 1.3rem;margin-left: 0.45rem;">Пароль не может быть таким же, как в поле.</li>
+                                </ul>
+                            </small>
+                        </div>
+                    </div>
+                    <div id="div_id_password_repeat" class="form-group mb-2">
+                        <h6 for="id_password_repeat" class=" requiredField text-center">Подтверждение пароля</h6>
+                        <div>
+                            <input type="password" name="password2" maxlength="100" class="textinput textInput form-control" required id="id_password_repeat" pattern="[a-zA-Z0-9!@#$%&*,.]{8,255}">
+                            <small style="margin: 0.25rem 0 0 0.45rem;" id="hint_id_password_repeat" class="form-text text-muted">Введите пароль ещё раз.</small>
+                        </div>
                     </div>
                 </div>
-
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Регистрация</button>
-            </div>
+                <div class="form-group">
+                    <button class="btn btn-outline-info my-3" style="display: block;width: 250px; margin: auto;" type="submit">Зарегистрироваться</button>
+                </div>
+            </fieldset>
         </form>
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                Уже есть аккаунт? <a class="ml-2" href="{% url 'login' %}">Вход</a>
+        <div>
+            <small class="text-muted" style="display: block; margin-left: 15px;">
+                Уже есть аккаунт? <a class="ml-2" href="{% url 'login' %}">Войдите в него тут!</a>
             </small>
         </div>
     </div>
 {% endblock login %}
+{% block scripts %}
+    <script>
+        function hide_errors() {
+            document.querySelector('#errors').style.animation = "fadeOutFromBlock 0.5s ease-in-out;";
+        }
+
+        function toggleTwoClasses(element, first, second, timeOfAnimation) {
+            element.classList.add(second);
+            window.setTimeout(function() {
+              element.classList.remove(first);
+            }, timeOfAnimation);
+        }
+
+        window.onload = function() {
+            const errors = document.getElementById("errors");
+            window.setTimeout(function() { toggleTwoClasses(errors, "is-visible", "is-hidden", 490) }, 15000)
+        }
+    </script>
+{% endblock scripts%}

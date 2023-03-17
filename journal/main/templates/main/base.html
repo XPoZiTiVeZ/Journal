@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,20 +6,195 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'slick/slick.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'slick/slick-theme.css' %}"/>
+
     {% block links %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
-<body onload="loading()">
-  {% block styles %}{% endblock %}
-  <div class="container py-3">
+<body>
+  {% block styles %}{% endblock styles %}
+  <style>
+    body {
+      background-color: #e6e6e6;
+    }
+
+    header {
+      background-color: #fff;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+
+    li {
+      list-style-type: none;
+      line-height: 2.5rem;
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    tr {
+      border-top: 1px solid #fff;
+    }
+    input {
+      text-align: center;
+    }
+    .no-p {
+      padding: 0 5px;
+    }
+
+    .nado {
+      padding: 0.5rem;
+      border-radius: 9px;
+    }
+
+    .ml-2 {
+      margin-left: 0.5rem;
+    }
+
+    .nado:hover {
+      background: #d6d6d6;
+    }
+    
+    .menu {
+      padding: 0;
+    }
+
+    .name {
+      margin-left: 1rem;
+    }
+
+    .loader {
+      animation: spin 1s infinite linear;
+      border: solid 2vmin transparent;
+      border-radius: 50%;
+      border-right-color: #09f;
+      border-top-color: #09f;
+      box-sizing: border-box;
+      height: 20vmin;
+      left: calc(50% - 10vmin);
+      position: fixed;
+      top: calc(50% - 10vmin);
+      width: 20vmin;
+      z-index: 1;
+    }
+    .loader:before {
+      animation: spin 2s infinite linear;
+      border: solid 2vmin transparent;
+      border-radius: 50%;
+      border-right-color: #3cf;
+      border-top-color: #3cf;
+      box-sizing: border-box;
+      content: "";
+      height: 16vmin;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 16vmin;
+    }
+    .loader:after {
+      animation: spin 3s infinite linear;
+      border: solid 2vmin transparent;
+      border-radius: 50%;
+      border-right-color: #6ff;
+      border-top-color: #6ff;
+      box-sizing: border-box;
+      content: "";
+      height: 12vmin;
+      left: 2vmin;
+      position: absolute;
+      top: 2vmin;
+      width: 12vmin;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    .slider {
+      margin: 0 50px;
+    }
+    .slider-prev {
+      position: absolute;
+      top: 5px;
+      left: -30px;
+    }
+    .slider-next {
+      position: absolute;
+      top: 5px;
+      right: -30px;
+    }
+    @media (max-width: 768px) {
+      .slider {
+        margin: 0 0 50px;
+      }
+      .slider-prev {
+        position: absolute;
+        top: 50px;
+        left: 0;
+      }
+      .slider-next {
+        position: absolute;
+        top: 50px;
+        right: 0;
+      }
+    }
+    .lessons {
+      border-radius: 15px;
+      background-color: #fff;
+    }
+    .success {
+      background-color: lightgreen;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 0.5rem;
+      border-radius: 9px;
+      max-width: 500px;
+    }
+    .error {
+      background-color: red;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 0.5rem;
+      border-radius: 9px;
+      max-width: 500px;
+    }
+    .info {
+      background-color: yellowgreen;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 0.5rem;
+      border-radius: 9px;
+      max-width: 500px;
+    }
+  </style>
+  <div id="spinner" class="loader" style="display:block"></div>
+  <div class="container" id="page" style="display:none">
     <header>
-      <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <div class="d-flex flex-column flex-md-row align-items-center py-2 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-          <span class="fs-4">Журнал нового поколения</span>
+          <span class="fs-4 name">Электронный дневник</span>
         </a>
-  
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-          <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'home' %}">Журнал</a>
+          {% if user.is_staff %}
+            <a class="me-3 py-2 text-dark text-decoration-none" href="admin/">Админпанель</a>
+          {% endif %}
+          {% if user.is_teacher %}
+          <a class="me-3 py-2 text-dark text-decoration-none" href="admin/">Классы</a>
+          {% endif %}
+          <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'diary' %}">Журнал</a>
           {% if user.is_authenticated %}
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'profile' %}">Профиль</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'logout' %}">Выход</a>
@@ -29,15 +205,43 @@
         </nav>
       </div>
     </header>
-    <main>
+    <main style="position: relative;">
+      <div style="position: absolute;top: -40px;left: 50%;transform: translate(-50%)">
+        {% if messages %}
+          <ul class="messages p-0">
+              {% for message in messages %}
+                <li class="{{ message.tags }} text-center">{{ message }}</li>
+              {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
       {% if user.is_authenticated %}
-      {% block content %}{% endblock %}
-      {% else %}
-      {% block login %}{% endblock %}
+          {% block content %}{% endblock content %}
+        {% else %}
+          {% block login %}{% endblock login %}
       {% endif %}
     </main>
-    <p>{{ user.firstname }}</p>
+    <footer style="margin-bottom: 100px">
+    </footer>
     {% block scripts %}{% endblock %}
   </div>
 </body>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="{% static 'slick/slick.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  window.onload = function() {
+    setTimeout(function() {
+      document.getElementById("spinner").style.display = "none";
+      document.getElementById("page").style.display = "block";
+    }, 1000);
+    setTimeout(function() {
+      $('html, body').animate({scrollTop: $('#scroll').offset().top}, 300);
+    }, 1000);
+    setTimeout(function() {
+      $('.messages').fadeOut('slow');
+    }, 8000);
+  }
+</script>
 </html>

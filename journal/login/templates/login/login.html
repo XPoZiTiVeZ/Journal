@@ -1,20 +1,38 @@
 {% extends "main/base.html" %}
-{% load crispy_forms_tags %}
+{% block styles %}
+<style>
+
+</style>
+{% endblock %}
+{% block login_errors %}
+  {{ error }}
+{% endblock %}
 {% block login %}
-    <div class="content-section">
-        <form method="POST">
+    <div class="content-section" style="max-width: 500px; margin: auto;">
+        <form method="POST" autocomplete="on" style="background-color: white;border-radius: 15px; padding: 5px 15px 0;">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Вход</legend>
-                {{ form|crispy }}
+                <legend class="mb-4 text-center">Вход</legend>
+                <div id="div_id_email" class="form-group"> 
+                    <h6 for="id_email" class="requiredField text-center">Адрес электронной почты<h6> 
+                    <div>
+                        <input type="text" name="email" autofocus="" autocapitalize="none" autocomplete="email" maxlength="254" class="textinput textInput form-control" required="" id="id_username"> 
+                    </div>
+                </div>
+                <div id="div_id_password" class="form-group">
+                    <h6 for="id_password" class="requiredField text-center">Пароль</h6>
+                    <div>
+                        <input type="password" name="password" autocomplete="current-password" class="textinput textInput form-control" required="" id="id_password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-outline-info my-3" type="submit" style="display: block; width: 150px; margin: auto;">Войти</button>
+                </div>
             </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Войти</button>
-            </div>
         </form>
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                Нужен аккаунт? <a class="ml-2" href="{% url 'register' %}">Регистрация</a>
+        <div>
+            <small class="text-muted" style="display: block; margin-left: 15px;">
+                Ещё нет аккаунта? <a class="ml-2" href="{% url 'register' %}">Зарегистрируйся тут!</a>
             </small>
         </div>
     </div>

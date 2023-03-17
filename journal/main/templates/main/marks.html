@@ -106,7 +106,7 @@
         </div>
         <div class="slider">
           {% for item in daterange %}
-            <div class="sliders" data-slide="{{ item.1 }}"><span class="text-center" style="display:block;background-color:#e6e6e6;border-radius:30px;width:100px;height:40px;margin: 0 auto;"><a href="{% url 'home' %}?date={{ item.2 }}" class="text-center" style="display:block;line-height:35px;">{{ item.0 }}</a></span></div>
+            <div class="sliders" data-slide="{{ item.1 }}"><span class="text-center" style="display:block;background-color:#e6e6e6;border-radius:30px;width:100px;height:40px;margin: 0 auto;"><a href="{% url 'diary' %}?date={{ item.2 }}" class="text-center" style="display:block;line-height:35px;">{{ item.0 }}</a></span></div>
           {% endfor %}
         </div>
         <div class="lessons" style="background-color:#e6e6e6;border-radius:5px;">

@@ -1,14 +1,51 @@
 {% extends "main/base.html" %}
-{% load crispy_forms_tags %}
-{% block login %}
-    <div class="content-section">
+{% block styles %}
+<style>
+  .profile {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 10px;
+  }
+  .media-body {
+    background-color: #e6e6e6;
+    border-radius: 15px;
+    padding: 10px;
+  }
+</style>
+{% endblock styles %}
+{% block content %}
+    <div class="profile">
       <div class="media">
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-header">
+          <h2 style="display: block; margin-left: 10px;">
+            Вы 
+            {% if user.is_teacher %}
+            учитель
+            {% else %}
+            ученик
+            {% endif %}
+          </h2>
+        </div>
         <div class="media-body">
-          <h2 class="account-heading">{{ user.username }}</h2>
-          <p class="text-secondary">{{ user.email }}</p>
+          <table>
+            <tr>
+              <td>Почта</td>
+              <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+              <td>ФИО</td>
+              <td>{{ user.last_name }} {{ user.first_name }} {{ user.father_name }}</td>
+            </tr>
+            <tr>
+              {% if user.is_teacher %}
+                <td>Классы</td>
+              {% else %}
+                <td>Класс</td>
+              {% endif %}
+              <td>{{ user.classes }}</td>
+            </tr>
+          </table>
         </div>
       </div>
-      <!-- Здесь будет форма -->
     </div>
-{% endblock login %}
+{% endblock content %}

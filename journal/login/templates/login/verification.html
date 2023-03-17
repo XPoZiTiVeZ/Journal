@@ -1,0 +1,9 @@
+{% autoescape off %}
+
+Здравствуйте, {{ user.last_name }} {{ user.first_name }}
+
+Пожалуйста перейдите по ссылке, чтобы подтвердить свой аккаунт.
+
+http://{{ domain }}{% url 'verification' uidb64=uid token=token %}
+
+{% endautoescape %}

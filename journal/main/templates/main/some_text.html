@@ -1,0 +1,42 @@
+<div>
+          
+</div>
+<div class="slider">
+  
+</div>
+{% for lsn in day %}
+<div>
+  {{ lsn }}
+</div>
+{% endfor %}
+<script>
+  var width = window.innerWidth;
+  $(document).ready(function () {
+    var slider = $('.slider');
+    slider.slick({
+      prevArrow: '<button onclick="check();" class="slider-prev" aria-label="Previous" type="button">&lt;</button>',
+      nextArrow: '<button onclick="check();" class="slider-next" aria-label="Next" type="button">&gt;</button>',
+      infinite: false,
+      mobileFirst: true,
+      slidesToShow: 7,
+      slidesToScroll: 7,
+    });
+    slider.slick('slickGoTo', '{{ datenow }}');
+  });    
+  $(".slider .slick-arrow").on("click", function() {
+    
+  });
+  function check(){
+    setTimeout(() => {
+      var parent = document.querySelector('.slick-active');
+      var info = parent.querySelector('.sliders').getAttribute("data-slide");
+      document.querySelector('.month').innerHTML = info;
+    }, 10);
+  };
+</script>
+
+var timeout
+function loading() {
+  console.log('loading')
+  timeout = 
+}
